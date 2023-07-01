@@ -53,3 +53,29 @@ export function checkGuess(guess, answer) {
 
   return result;
 }
+
+export function checkGuess2(guess, answer) {
+  const guessArray = guess.split('');
+  const answerArray = answer.split('');
+
+  const result = guessArray.reduce((result, char, index) => {
+    if(!answer.includes(char)){
+      result.push({ letter: char, status: 'incorrect' })
+      return result;
+    }
+
+    const indexes = answerArray
+      .map((c, i) => { if (c === char) return i; return -1; })
+      .filter((v) => v >= 0);
+
+    if(indexes.includes(index)) {
+      result.push({ letter: char, status: 'correct' })
+    } else {
+      result.push({ letter: char, status: 'misplaced' })
+    }
+
+    return result;
+  }, []);
+
+  return result;
+}
